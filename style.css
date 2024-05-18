@@ -1,0 +1,17 @@
+.grid {
+  height: 480px;
+  width: 480px;
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid black;
+  margin: auto;
+}
+
+.gridItem {
+  height: 60px;
+  width: 60px;
+}
+
+h1 {
+  text-align: center;
+}
