@@ -5,11 +5,12 @@
   flex-wrap: wrap;
   border: 1px solid black;
   margin: auto;
+  justify-content: space-around;
 }
 
 .gridItem {
-  height: 60px;
-  width: 60px;
+  height: 55px;
+  width: 55px;
 }
 
 h1 {
