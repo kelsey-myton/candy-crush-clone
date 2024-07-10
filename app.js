@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let swapCandyColor;
   let choosenCandyId;
   let swapCandyId;
+  let score = 0;
 
   // Create game board
   function createBoard() {
@@ -77,4 +78,111 @@ document.addEventListener("DOMContentLoaded", () => {
     candies[choosenCandyId].style.backgroundColor = swapCandyColor;
     console.log(swapCandyId, "dragDrop");
   }
+
+  // Checking for matches
+
+  function checkForThreeInRow() {
+    for (i = 0; i < 61; i++) {
+      // Don't check the last 2 columns
+      if (i % width === width - 1 || i % width === width - 2) {
+        continue;
+      }
+      let threeInRow = [i, i + 1, i + 2];
+      let rowColor = candies[i].style.backgroundColor;
+      let isBlank = rowColor === "";
+
+      if (
+        threeInRow.every(
+          (candy) =>
+            candies[candy].style.backgroundColor === rowColor && !isBlank
+        )
+      ) {
+        score += 3;
+        threeInRow.forEach((candy) => {
+          candies[candy].style.backgroundColor = "";
+        });
+      }
+    }
+  }
+  checkForThreeInRow();
+
+  function checkForThreeInColumn() {
+    for (i = 0; i < 47; i++) {
+      let threeInColumn = [i, i + width, i + width * 2];
+      let columnColor = candies[i].style.backgroundColor;
+      let isBlank = columnColor === "";
+
+      if (
+        threeInColumn.every(
+          (candy) =>
+            candies[candy].style.backgroundColor === columnColor && !isBlank
+        )
+      ) {
+        score += 3;
+        threeInColumn.forEach((candy) => {
+          candies[candy].style.backgroundColor = "";
+        });
+      }
+    }
+  }
+
+  checkForThreeInColumn();
+
+  function checkForFourInRow() {
+    for (i = 0; i < 60; i++) {
+      // Don't check the last 3 columns
+      if (
+        i % width === width - 1 ||
+        i % width === width - 2 ||
+        i % width === width - 3
+      ) {
+        continue;
+      }
+      let fourInRow = [i, i + 1, i + 2, i + 3];
+      let rowColor = candies[i].style.backgroundColor;
+      let isBlank = rowColor === "";
+
+      if (
+        fourInRow.every(
+          (candy) =>
+            candies[candy].style.backgroundColor === rowColor && !isBlank
+        )
+      ) {
+        score += 5;
+        fourInRow.forEach((candy) => {
+          candies[candy].style.backgroundColor = "";
+        });
+      }
+    }
+  }
+  checkForFourInRow();
+
+  function checkForFourInColumn() {
+    for (i = 0; i < 39; i++) {
+      let fourInColumn = [i, i + width, i + width * 2, i + width * 3];
+      let columnColor = candies[i].style.backgroundColor;
+      let isBlank = columnColor === "";
+
+      if (
+        fourInColumn.every(
+          (candy) =>
+            candies[candy].style.backgroundColor === columnColor && !isBlank
+        )
+      ) {
+        score += 3;
+        fourInColumn.forEach((candy) => {
+          candies[candy].style.backgroundColor = "";
+        });
+      }
+    }
+  }
+
+  checkForFourInColumn();
+
+  window.setInterval(function () {
+    checkForFourInRow();
+    checkForFourInColumn();
+    checkForThreeInRow();
+    checkForThreeInColumn();
+  }, 500);
 });
