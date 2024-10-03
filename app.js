@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const width = 8;
   const candies = [];
   const candyColors = ["red", "yellow", "blue", "pink", "orange", "purple"];
+  const scoreDisplay = document.getElementById("score");
   let choosenCandyColor;
   let swapCandyColor;
   let choosenCandyId;
@@ -98,6 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
         )
       ) {
         score += 3;
+        scoreDisplay.innerHTML = score;
         threeInRow.forEach((candy) => {
           candies[candy].style.backgroundColor = "";
         });
@@ -119,6 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
         )
       ) {
         score += 3;
+        scoreDisplay.innerHTML = score;
         threeInColumn.forEach((candy) => {
           candies[candy].style.backgroundColor = "";
         });
@@ -170,6 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
         )
       ) {
         score += 3;
+        scoreDisplay.innerHTML = score
         fourInColumn.forEach((candy) => {
           candies[candy].style.backgroundColor = "";
         });
@@ -179,10 +183,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
   checkForFourInColumn();
 
+  function dropCandies() {
+    for (i = 0; i < 55; i++) {
+      if (candies[i + width].style.backgroundColor === "") {
+        candies[i + width].style.backgroundColor =
+          candies[i].style.backgroundColor;
+        candies[i].style.backgroundColor = "";
+        const isFirstRow = 0 <= i && i <= 7;
+        if (isFirstRow && candies[i].style.backgroundColor === "") {
+          const randomCandyColor = Math.floor(Math.random() * candyColors.length);
+          candies[i].style.backgroundColor = candyColors[randomCandyColor];
+        }
+      }
+    }
+  }
+
   window.setInterval(function () {
+    dropCandies();
     checkForFourInRow();
     checkForFourInColumn();
     checkForThreeInRow();
     checkForThreeInColumn();
-  }, 500);
+  }, 200);
 });
