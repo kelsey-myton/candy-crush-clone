@@ -1,8 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const grid = document.querySelector(".grid");
+  const board = document.querySelector(".board");
   const width = 8;
   const candies = [];
-  const candyColors = ["red", "yellow", "blue", "pink", "orange", "purple"];
+  const candyColors = [
+    "url(images/Red.png)",
+    "url(images/Yellow.png)",
+    "url(images/Blue.png)",
+    "url(images/Green.png)",
+    "url(images/Orange.png)",
+    "url(images/Purple.png)",
+  ];
   const scoreDisplay = document.getElementById("score");
   let choosenCandyColor;
   let swapCandyColor;
@@ -15,11 +22,11 @@ document.addEventListener("DOMContentLoaded", () => {
     for (let i = 0; i < width * width; i++) {
       const candy = document.createElement("div");
       let randomColor = Math.floor(Math.random() * candyColors.length);
-      candy.style.backgroundColor = candyColors[randomColor];
+      candy.style.backgroundImage = candyColors[randomColor];
       candy.setAttribute("draggable", true);
       candy.setAttribute("id", i);
-      candy.setAttribute("class", "gridItem");
-      grid.appendChild(candy);
+      candy.setAttribute("class", "boardItem");
+      board.appendChild(candy);
       candies.push(candy);
     }
   }
@@ -36,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function dragStart() {
-    choosenCandyColor = this.style.backgroundColor;
+    choosenCandyColor = this.style.backgroundImage;
     choosenCandyId = parseInt(this.id);
     console.log(this.id, "dragStart");
   }
@@ -55,10 +62,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (swapCandyId && isValidMove) {
       swapCandyId = null;
     } else if (swapCandyId && !isValidMove) {
-      candies[swapCandyId].style.backgroundColor = swapCandyColor;
-      candies[choosenCandyId].style.backgroundColor = choosenCandyColor;
+      candies[swapCandyId].style.backgroundImage = swapCandyColor;
+      candies[choosenCandyId].style.backgroundImage = choosenCandyColor;
     } else {
-      candies[choosenCandyId].style.backgroundColor = choosenCandyColor;
+      candies[choosenCandyId].style.backgroundImage = choosenCandyColor;
     }
   }
   function dragOver(e) {
@@ -73,35 +80,35 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(this.id, "dragLeave");
   }
   function dragDrop() {
-    swapCandyColor = this.style.backgroundColor;
+    swapCandyColor = this.style.backgroundImage;
     swapCandyId = parseInt(this.id);
-    this.style.backgroundColor = choosenCandyColor;
-    candies[choosenCandyId].style.backgroundColor = swapCandyColor;
+    this.style.backgroundImage = choosenCandyColor;
+    candies[choosenCandyId].style.backgroundImage = swapCandyColor;
     console.log(swapCandyId, "dragDrop");
   }
 
   // Checking for matches
 
   function checkForThreeInRow() {
-    for (i = 0; i < 61; i++) {
+    for (i = 0; i <= 61; i++) {
       // Don't check the last 2 columns
       if (i % width === width - 1 || i % width === width - 2) {
         continue;
       }
       let threeInRow = [i, i + 1, i + 2];
-      let rowColor = candies[i].style.backgroundColor;
+      let rowColor = candies[i].style.backgroundImage;
       let isBlank = rowColor === "";
 
       if (
         threeInRow.every(
           (candy) =>
-            candies[candy].style.backgroundColor === rowColor && !isBlank
+            candies[candy].style.backgroundImage === rowColor && !isBlank
         )
       ) {
         score += 3;
         scoreDisplay.innerHTML = score;
         threeInRow.forEach((candy) => {
-          candies[candy].style.backgroundColor = "";
+          candies[candy].style.backgroundImage = "";
         });
       }
     }
@@ -109,21 +116,21 @@ document.addEventListener("DOMContentLoaded", () => {
   checkForThreeInRow();
 
   function checkForThreeInColumn() {
-    for (i = 0; i < 47; i++) {
+    for (i = 0; i <= 47; i++) {
       let threeInColumn = [i, i + width, i + width * 2];
-      let columnColor = candies[i].style.backgroundColor;
+      let columnColor = candies[i].style.backgroundImage;
       let isBlank = columnColor === "";
 
       if (
         threeInColumn.every(
           (candy) =>
-            candies[candy].style.backgroundColor === columnColor && !isBlank
+            candies[candy].style.backgroundImage === columnColor && !isBlank
         )
       ) {
         score += 3;
         scoreDisplay.innerHTML = score;
         threeInColumn.forEach((candy) => {
-          candies[candy].style.backgroundColor = "";
+          candies[candy].style.backgroundImage = "";
         });
       }
     }
@@ -132,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
   checkForThreeInColumn();
 
   function checkForFourInRow() {
-    for (i = 0; i < 60; i++) {
+    for (i = 0; i <= 60; i++) {
       // Don't check the last 3 columns
       if (
         i % width === width - 1 ||
@@ -142,18 +149,18 @@ document.addEventListener("DOMContentLoaded", () => {
         continue;
       }
       let fourInRow = [i, i + 1, i + 2, i + 3];
-      let rowColor = candies[i].style.backgroundColor;
+      let rowColor = candies[i].style.backgroundImage;
       let isBlank = rowColor === "";
 
       if (
         fourInRow.every(
           (candy) =>
-            candies[candy].style.backgroundColor === rowColor && !isBlank
+            candies[candy].style.backgroundImage === rowColor && !isBlank
         )
       ) {
         score += 5;
         fourInRow.forEach((candy) => {
-          candies[candy].style.backgroundColor = "";
+          candies[candy].style.backgroundImage = "";
         });
       }
     }
@@ -161,21 +168,21 @@ document.addEventListener("DOMContentLoaded", () => {
   checkForFourInRow();
 
   function checkForFourInColumn() {
-    for (i = 0; i < 39; i++) {
+    for (i = 0; i <= 39; i++) {
       let fourInColumn = [i, i + width, i + width * 2, i + width * 3];
-      let columnColor = candies[i].style.backgroundColor;
+      let columnColor = candies[i].style.backgroundImage;
       let isBlank = columnColor === "";
 
       if (
         fourInColumn.every(
           (candy) =>
-            candies[candy].style.backgroundColor === columnColor && !isBlank
+            candies[candy].style.backgroundImage === columnColor && !isBlank
         )
       ) {
         score += 3;
-        scoreDisplay.innerHTML = score
+        scoreDisplay.innerHTML = score;
         fourInColumn.forEach((candy) => {
-          candies[candy].style.backgroundColor = "";
+          candies[candy].style.backgroundImage = "";
         });
       }
     }
@@ -184,15 +191,17 @@ document.addEventListener("DOMContentLoaded", () => {
   checkForFourInColumn();
 
   function dropCandies() {
-    for (i = 0; i < 55; i++) {
-      if (candies[i + width].style.backgroundColor === "") {
-        candies[i + width].style.backgroundColor =
-          candies[i].style.backgroundColor;
-        candies[i].style.backgroundColor = "";
+    for (i = 0; i <= 55; i++) {
+      if (candies[i + width].style.backgroundImage === "") {
+        candies[i + width].style.backgroundImage =
+          candies[i].style.backgroundImage;
+        candies[i].style.backgroundImage = "";
         const isFirstRow = 0 <= i && i <= 7;
-        if (isFirstRow && candies[i].style.backgroundColor === "") {
-          const randomCandyColor = Math.floor(Math.random() * candyColors.length);
-          candies[i].style.backgroundColor = candyColors[randomCandyColor];
+        if (isFirstRow && candies[i].style.backgroundImage === "") {
+          const randomCandyColor = Math.floor(
+            Math.random() * candyColors.length
+          );
+          candies[i].style.backgroundImage = candyColors[randomCandyColor];
         }
       }
     }
@@ -204,5 +213,5 @@ document.addEventListener("DOMContentLoaded", () => {
     checkForFourInColumn();
     checkForThreeInRow();
     checkForThreeInColumn();
-  }, 200);
+  }, 100);
 });

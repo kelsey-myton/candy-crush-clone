@@ -1,18 +1,47 @@
-.grid {
+.board {
   height: 480px;
   width: 480px;
+  margin: 80%;
   display: flex;
   flex-wrap: wrap;
-  border: 1px solid black;
-  margin: auto;
+  border: 3px solid lightslategray;
+  border-radius: 10px;
+  margin: 0 auto;
   justify-content: space-around;
+  background-color: lightskyblue;
 }
 
-.gridItem {
+.boardItem {
   height: 55px;
   width: 55px;
+  background-repeat: no-repeat;
+  background-size: 45px;
 }
 
 h1 {
   text-align: center;
+}
+
+.score-board {
+  width: 150px;
+  height: 80px;
+  background-color: lightpink;
+  border: 2px solid lightslategray;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#game{
+  display: flex;
+  margin-left: 20px;
+  margin-right: 150px;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-image: url("/images/candy-crush-saga-background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
